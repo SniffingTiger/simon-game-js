@@ -18,10 +18,17 @@ const bottomRight = document.querySelector("#bottomright");
 const strictButton = document.querySelector("#strict");
 const onButton = document.querySelector("#on");
 const startButton = document.querySelector("#start");
+const instructionText = document.querySelector("#instruction-text");
+const eventText = document.querySelector("#event-text");
 
 strictButton.addEventListener('click', (event) => {
   if (strictButton.checked == true) {
     strict = true;
+    let prevTxt = instructionText.innerHTML;
+      instructionText.innerHTML = "<span style='color: darkred'>If you get a turn wrong, you will lose the game!</span>";
+  setTimeout(() => {
+        instructionText.innerHTML = prevTxt;
+      }, 1500);
   } else {
     strict = false;
   }
@@ -35,6 +42,7 @@ onButton.addEventListener('click', (event) => {
     on = false;
     turnCounter.innerHTML = "";
     clearColor();
+    instructionText.innerHTML = "Press Start to begin playing!";
     clearInterval(intervalId);
   }
 });
@@ -43,9 +51,19 @@ startButton.addEventListener('click', (event) => {
   if (on || win) {
     play();
   }
+  else if (!on) {
+    let prevTxt = instructionText.innerHTML;
+      instructionText.innerHTML = "<span style='color: darkred'>You must turn on the power first!</span>";
+  setTimeout(() => {
+        instructionText.innerHTML = prevTxt;
+      }, 1100);
+  }
 });
 
 function play() {
+  let prevTxt = instructionText.innerHtml;  
+  instructionText.innerHTML = "Press the buttons in the same order that the game did!";
+  startButton.style
   win = false;
   order = [];
   playerOrder = [];
@@ -58,6 +76,7 @@ function play() {
     order.push(Math.floor(Math.random() * 4) + 1);
   }
   compTurn = true;
+  instructionText = prevTxt;
 
   intervalId = setInterval(gameTurn, 800);
 }
@@ -190,7 +209,7 @@ function check() {
   if (playerOrder[playerOrder.length - 1] !== order[playerOrder.length - 1])
     good = false;
 
-  if (playerOrder.length == 3 && good) {
+  if (playerOrder.length == 20 && good) {
     winGame();
   }
 
@@ -223,7 +242,6 @@ function check() {
     turnCounter.innerHTML = turn;
     intervalId = setInterval(gameTurn, 800);
   }
-
 }
 
 function winGame() {
