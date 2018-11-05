@@ -62,6 +62,7 @@ startButton.addEventListener('click', (event) => {
 });
 
 function play() {
+	instructionText.innerHTML = "Remember the order in which the buttons light up.";
   startButton.style
   win = false;
   order = [];
