@@ -38,11 +38,12 @@ onButton.addEventListener('click', (event) => {
   if (onButton.checked == true) {
     on = true;
     turnCounter.innerHTML = "-";
+	instructionText.innerHTML = "Press Start to begin playing!";
   } else {
     on = false;
     turnCounter.innerHTML = "";
     clearColor();
-    instructionText.innerHTML = "Press Start to begin playing!";
+    instructionText.innerHTML = "Turn on the power";
     clearInterval(intervalId);
   }
 });
@@ -61,8 +62,6 @@ startButton.addEventListener('click', (event) => {
 });
 
 function play() {
-  let prevTxt = instructionText.innerHtml;  
-  instructionText.innerHTML = "Press the buttons in the same order that the game did!";
   startButton.style
   win = false;
   order = [];
@@ -76,7 +75,6 @@ function play() {
     order.push(Math.floor(Math.random() * 4) + 1);
   }
   compTurn = true;
-  instructionText = prevTxt;
 
   intervalId = setInterval(gameTurn, 800);
 }
@@ -89,9 +87,11 @@ function gameTurn() {
     compTurn = false;
     clearColor();
     on = true;
+	instructionText.innerHTML = "Press the buttons in the order they lit up!";
   }
 
   if (compTurn) {
+	instructionText.innerHTML = "Remember the order in which the buttons light up.";
     clearColor();
     setTimeout(() => {
       if (order[flash] == 1) one();
@@ -101,6 +101,7 @@ function gameTurn() {
       flash++;
     }, 200);
   }
+  
 }
 
 function one() {
